@@ -1,9 +1,8 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
-import Books from './Books'
+import Bookshelf from './Bookshelf'
 
-// const books = BooksAPI.getAll()
 class BooksApp extends React.Component {
   state = {
     books: [],
@@ -22,9 +21,9 @@ class BooksApp extends React.Component {
     })
   }
   
-  
   render() {
     const { books } = this.state
+
     return (
       <div className="app">
         {this.state.showSearchPage ? (
@@ -55,36 +54,9 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Currently Reading</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {books.map((book)=> 
-                        <Books key={book.id} book={book} />
-                      )}
-                    </ol>
-                  </div>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Want to Read</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {books.map((book)=> 
-                        <Books key={book.id} book={book} />
-                      )}
-                    </ol>
-                  </div>
-                </div>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">Read</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                      {books.map((book)=> 
-                        <Books key={book.id} book={book} />
-                      )}
-                    </ol>
-                  </div>
-                </div>
+                <Bookshelf books={books} title="Currently Reading"/>
+                <Bookshelf books={books} title="Want to Read"/>
+                <Bookshelf books={books} title="Read"/>
               </div>
             </div>
             <div className="open-search">
