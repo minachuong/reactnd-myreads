@@ -14,13 +14,14 @@ class BooksApp extends React.Component {
      */
     showSearchPage: true
   }
-  
+ 
+  something = () => { console.log("dfsdfa") } 
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       this.setState({ books })
     })
   }
-  
+ 
   render() {
     const { books } = this.state
 
@@ -54,9 +55,9 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                <Bookshelf books={books} title="Currently Reading" shelf="currentlyReading" />
-                <Bookshelf books={books} title="Want to Read" shelf="wantToRead" />
-                <Bookshelf books={books} title="Read" shelf="read" />
+                <Bookshelf books={books} title="Currently Reading" shelf="currentlyReading" reloadShelves={() => this.componentDidMount()} />
+                <Bookshelf books={books} title="Want to Read" shelf="wantToRead" reloadShelves={() => this.componentDidMount()} />
+                <Bookshelf books={books} title="Read" shelf="read" reloadShelves={() => this.componentDidMount()} />
               </div>
             </div>
             <div className="open-search">

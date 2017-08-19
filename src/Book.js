@@ -1,9 +1,16 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import * as BooksAPI from './BooksAPI'
 
 class Books extends Component {
+  onMoveBook = (book, value) => {
+    BooksAPI.update(book, value).then(
+      this.props.setShelf  
+    );
+  }
 
   render() {
-    const { book } = this.props
+    const { book } = this.props;
 
     return(
       <li>
@@ -11,7 +18,7 @@ class Books extends Component {
           <div className="book-top">
             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
             <div className="book-shelf-changer">
-              <select value={book.shelf}>
+              <select value={book.shelf} onChange={(event)=> this.onMoveBook(book, event.target.value)}>
                 <option value="none" disabled>Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
@@ -28,7 +35,10 @@ class Books extends Component {
       </li> 
     ) 
   }
+}
 
+Books.propTypes = {
+  book: PropTypes.object.isRequired,
 }
 
 export default Books
