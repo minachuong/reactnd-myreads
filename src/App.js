@@ -25,17 +25,13 @@ class BooksApp extends React.Component {
         "title":"Read", 
         "shelf": "read"
       },
-   ],
+    ],
     showSearchPage: true
   }
  
-  reloadShelves = (newShelves) => {
-    this.componentDidMount()
-  }
-
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
-       this.setState({ books })
+      this.setState({ books })
     })
   }
   
@@ -58,7 +54,6 @@ class BooksApp extends React.Component {
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
                 <input type="text" placeholder="Search by title or author"/>
-                
               </div>
             </div>
             <div className="search-books-results">
@@ -78,7 +73,7 @@ class BooksApp extends React.Component {
                   title={category["title"]} 
                   shelf={category["shelf"]} 
                   key={category["shelf"]} 
-                  reloadShelf={(newShelves) => this.reloadShelves(newShelves)}
+                  reloadShelf={(newShelves) => this.componentDidMount()}
                 />
               ))}
               </div>

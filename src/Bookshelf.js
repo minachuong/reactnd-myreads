@@ -3,6 +3,7 @@ import Book from './Book'
 import PropTypes from 'prop-types'
 
 class Bookshelf extends Component {
+
   render () {
     const { books, title, shelf, reloadShelf } = this.props
 
