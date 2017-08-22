@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import * as BooksAPI from './BooksAPI'
 
 class Books extends Component {
-  onMoveBook = (book, value) => {
-    BooksAPI.update(book, value).then(
-      this.props.setShelf  
-    );
+  updateBook (book, newShelf) {
+    BooksAPI.update(book, newShelf).then((response) => {
+      this.props.reloadShelf(response)
+    })
   }
-
+  
   render() {
     const { book } = this.props;
 
@@ -18,7 +18,7 @@ class Books extends Component {
           <div className="book-top">
             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
             <div className="book-shelf-changer">
-              <select value={book.shelf} onChange={(event)=> this.onMoveBook(book, event.target.value)}>
+              <select value={book.shelf} onChange={(event) => this.updateBook(book, event.target.value)}>
                 <option value="none" disabled>Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
@@ -39,6 +39,7 @@ class Books extends Component {
 
 Books.propTypes = {
   book: PropTypes.object.isRequired,
+  reloadShelf: PropTypes.func.isRequired,
 }
 
 export default Books

@@ -12,16 +12,33 @@ class BooksApp extends React.Component {
      * users can use the browser's back and forward buttons to navigate between
      * pages, as well as provide a good URL they can bookmark and share.
      */
+    shelfCategories: [
+      {
+        "title": "Currently Reading", 
+        "shelf": "currentlyReading"
+      },
+      {
+        "title": "Want to Read", 
+        "shelf": "wantToRead"
+      },
+      {
+        "title":"Read", 
+        "shelf": "read"
+      },
+   ],
     showSearchPage: true
   }
  
-  something = () => { console.log("dfsdfa") } 
+  reloadShelves = (newShelves) => {
+    this.componentDidMount()
+  }
+
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
-      this.setState({ books })
+       this.setState({ books })
     })
   }
- 
+  
   render() {
     const { books } = this.state
 
@@ -55,9 +72,15 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                <Bookshelf books={books} title="Currently Reading" shelf="currentlyReading" reloadShelves={() => this.componentDidMount()} />
-                <Bookshelf books={books} title="Want to Read" shelf="wantToRead" reloadShelves={() => this.componentDidMount()} />
-                <Bookshelf books={books} title="Read" shelf="read" reloadShelves={() => this.componentDidMount()} />
+              {this.state.shelfCategories.map((category) => (
+                <Bookshelf 
+                  books={books} 
+                  title={category["title"]} 
+                  shelf={category["shelf"]} 
+                  key={category["shelf"]} 
+                  reloadShelf={(newShelves) => this.reloadShelves(newShelves)}
+                />
+              ))}
               </div>
             </div>
             <div className="open-search">
