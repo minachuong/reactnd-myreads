@@ -28,11 +28,15 @@ class BooksApp extends React.Component {
     ],
     showSearchPage: true
   }
- 
-  componentDidMount() {
+
+  getBooks = () => {
     BooksAPI.getAll().then((books) => {
       this.setState({ books })
     })
+  } 
+  
+  componentDidMount() {
+    this.getBooks();
   }
   
   render() {
@@ -73,7 +77,7 @@ class BooksApp extends React.Component {
                   title={category["title"]} 
                   shelf={category["shelf"]} 
                   key={category["shelf"]} 
-                  reloadShelf={(newShelves) => this.componentDidMount()}
+                  reloadShelf={(newShelves) => this.getBooks()}
                 />
               ))}
               </div>
