@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 class Bookshelf extends Component {
 
   render () {
-    const { books, title, shelf, reloadShelf } = this.props
+    const { books, title, shelf, reloadShelves } = this.props
 
     let displayBooks = books.filter((book) => book.shelf === shelf)
 
@@ -15,7 +15,7 @@ class Bookshelf extends Component {
         <div className="bookshelf-books">
           <ol className="books-grid">
             {displayBooks.map((book)=> 
-              <Book key={book.id} book={book} reloadShelf={(newShelves) => reloadShelf(newShelves)} />
+              <Book key={book.id} book={book} reloadShelf={() => reloadShelves()} />
             )}  
           </ol>
         </div>
@@ -28,7 +28,7 @@ Bookshelf.propTypes = {
   books: PropTypes.array.isRequired,
   title: PropTypes.string.isRequired,
   shelf: PropTypes.string.isRequired,
-  reloadShelf: PropTypes.func.isRequired,
+  reloadShelves: PropTypes.func.isRequired,
 }
 
 export default Bookshelf

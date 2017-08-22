@@ -77,7 +77,7 @@ class BooksApp extends React.Component {
                   title={category["title"]} 
                   shelf={category["shelf"]} 
                   key={category["shelf"]} 
-                  reloadShelf={(newShelves) => this.getBooks()}
+                  reloadShelves={(newShelves) => this.getBooks()}
                 />
               ))}
               </div>

@@ -4,8 +4,8 @@ import * as BooksAPI from './BooksAPI'
 
 class Books extends Component {
   updateBook (book, newShelf) {
-    BooksAPI.update(book, newShelf).then((response) => {
-      this.props.reloadShelf(response)
+    BooksAPI.update(book, newShelf).then(() => {
+      this.props.reloadShelf();
     })
   }
   
