@@ -28,9 +28,13 @@ class Books extends Component {
             </div>
           </div>
           <div className="book-title">{book.title}</div>
-          {book.authors.map((author) => (
-            <div className="book-authors" key={author}>{author}</div>
-          ))}
+          {book.authors === undefined ? (
+            <div className="book-authors" >N/A</div>
+          ) : (
+            book.authors.map((author) => (
+              <div className="book-authors" key={author}>{author}</div>
+            ))
+          )}
         </div>
       </li> 
     ) 
@@ -39,7 +43,7 @@ class Books extends Component {
 
 Books.propTypes = {
   book: PropTypes.object.isRequired,
-  reloadShelf: PropTypes.func.isRequired,
+  reloadShelf: PropTypes.func,
 }
 
 export default Books
