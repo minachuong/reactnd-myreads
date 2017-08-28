@@ -39,7 +39,7 @@ class SearchBooks extends Component {
         <div className="search-books-results">
           <ol className="books-grid">
             {this.state.availableBooks.map((book) => (
-               <Book key={book.id} book={book} reloadShelf={() => {}} />
+               <Book key={book.id} book={book} reloadShelf={() => this.props.reloadShelves()} />
             ))}
           </ol>
         </div>
