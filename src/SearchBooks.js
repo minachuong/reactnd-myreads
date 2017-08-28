@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import Book from './Book'
 import * as BooksAPI from './BooksAPI'
+import SearchTerms from './SearchTerms'
+import * as Humanize from 'humanize-plus'
 
 class SearchBooks extends Component {
   state = {
@@ -10,16 +12,19 @@ class SearchBooks extends Component {
   }
   
   search = (query) => {
-    BooksAPI.search(query, 50).then((response) => { 
-      if (Array.isArray(response)) {
-        this.setState({ 
-          availableBooks: response,
-          query: query,
-        })
-      } else {
-        this.setState({ query: query })
-      }  
-    }) 
+    if (SearchTerms.includes(Humanize.capitalizeAll(query)) === false) {
+      this.setState({ query: query })
+    } else {
+      BooksAPI.search(query, 50).then((response) => { 
+        if (Array.isArray(response)) {
+          let unshelvedBooks = response.filter((book) => this.props.books.map((shelvedBook) => shelvedBook.id).includes(book.id) === false)
+          this.setState({ 
+            availableBooks: unshelvedBooks,
+            query: query,
+          })
+        }  
+      }) 
+    }
   }
 
   render() {
