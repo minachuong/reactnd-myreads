@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
-import Book from './Book'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import Book from './Book';
+import PropTypes from 'prop-types';
 
 class Bookshelf extends Component {
 
   render () {
-    const { books, title, shelf, reloadShelves } = this.props
+    const { books, title, shelf, reloadShelves } = this.props;
 
-    let displayBooks = books.filter((book) => book.shelf === shelf)
+    let displayBooks = books.filter((book) => book.shelf === shelf);
 
     return (
       <div className="bookshelf">
@@ -20,15 +20,15 @@ class Bookshelf extends Component {
           </ol>
         </div>
       </div>
-    )
-  }
-}
+    );
+  };
+};
 
 Bookshelf.propTypes = {
   books: PropTypes.array.isRequired,
   title: PropTypes.string.isRequired,
   shelf: PropTypes.string.isRequired,
   reloadShelves: PropTypes.func.isRequired,
-}
+};
 
 export default Bookshelf

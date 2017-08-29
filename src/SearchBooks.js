@@ -1,33 +1,37 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import Book from './Book'
-import * as BooksAPI from './BooksAPI'
-import SearchTerms from './SearchTerms'
-import * as Humanize from 'humanize-plus'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import Book from './Book';
+import * as BooksAPI from './BooksAPI';
+import SearchTerms from './SearchTerms';
+import * as Humanize from 'humanize-plus';
+import PropTypes from 'prop-types';
 
 class SearchBooks extends Component {
   state = {
     availableBooks: [],
-    query: "",
-  }
+    query: '',
+  };
   
   search = (query) => {
     if (SearchTerms.includes(Humanize.capitalizeAll(query)) === false) {
-      this.setState({ query: query })
+      this.setState({ query: query });
     } else {
-      BooksAPI.search(query, 50).then((response) => { 
+      BooksAPI.search(query, 20).then((response) => { 
         if (Array.isArray(response)) {
-          let unshelvedBooks = response.filter((book) => this.props.books.map((shelvedBook) => shelvedBook.id).includes(book.id) === false)
+          let shelvedBookIds = this.props.books.map((shelvedBook) => shelvedBook.id);
+          let unshelvedBooks = response.filter((book) => shelvedBookIds.includes(book.id) === false);
           this.setState({ 
             availableBooks: unshelvedBooks,
             query: query,
-          })
-        }  
-      }) 
-    }
-  }
+          });
+        };
+      }); 
+    };
+  };
 
   render() {
+    const { query, availableBooks } = this.state;
+
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -36,24 +40,26 @@ class SearchBooks extends Component {
             <input 
               type="text" 
               placeholder="Search by title or author" 
-              value={this.state.query} 
+              value={query} 
               onChange={(event) => this.search(event.target.value)} 
             />
           </div>
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.state.availableBooks.map((book) => (
+            {availableBooks.map((book) => (
                <Book key={book.id} book={book} reloadShelf={() => this.props.reloadShelves()} />
             ))}
           </ol>
         </div>
       </div>
-    ) 
-  }
-}
+    ); 
+  };
+};
 
 SearchBooks.propTypes = {
-}
+  books: PropTypes.array.isRequired,
+  reloadShelves: PropTypes.func.isRequired, 
+};
 
 export default SearchBooks

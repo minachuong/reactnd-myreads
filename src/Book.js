@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import * as BooksAPI from './BooksAPI'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import * as BooksAPI from './BooksAPI';
 
-class Books extends Component {
+class Book extends Component {
   updateBook (book, newShelf) {
     BooksAPI.update(book, newShelf).then(() => {
       this.props.reloadShelf();
-    })
-  }
+    });
+  };
   
   render() {
     const { book } = this.props;
@@ -37,13 +37,13 @@ class Books extends Component {
           )}
         </div>
       </li> 
-    ) 
-  }
-}
+    ); 
+  };
+};
 
-Books.propTypes = {
+Book.propTypes = {
   book: PropTypes.object.isRequired,
-  reloadShelf: PropTypes.func,
-}
+  reloadShelf: PropTypes.func.isRequired,
+};
 
-export default Books
+export default Book
