@@ -3,12 +3,29 @@ import PropTypes from 'prop-types';
 import * as BooksAPI from './BooksAPI';
 
 class Book extends Component {
+  state = {
+    shelvedBooks: [],
+  };
+
   updateBook (book, newShelf) {
     BooksAPI.update(book, newShelf).then(() => {
       this.props.reloadShelf();
     });
   };
-  
+ 
+  assignShelfValue = (book) => {
+    let shelvedBooksIds = this.state.shelvedBooks.map((shelvedBook) => shelvedBook.id);
+    if (shelvedBooksIds.includes(book.id)) {
+      return this.props.shelvedBooks.filter((shelvedBook) => shelvedBook.id === book.id)[0].shelf;
+    } else {
+      return "none";
+    };
+  };
+
+  componentDidMount() {
+    this.setState({ shelvedBooks: this.props.shelvedBooks });
+  };
+
   render() {
     const { book } = this.props;
 
@@ -18,7 +35,7 @@ class Book extends Component {
           <div className="book-top">
             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
             <div className="book-shelf-changer">
-              <select value={book.shelf === undefined ? "none" : book.shelf } onChange={(event) => this.updateBook(book, event.target.value)}>
+              <select value={book.shelf !== undefined ? book.shelf : this.assignShelfValue(book)} onChange={(event) => this.updateBook(book, event.target.value)}>
                 <option value="none" disabled>Move to...</option>
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
@@ -44,6 +61,7 @@ class Book extends Component {
 Book.propTypes = {
   book: PropTypes.object.isRequired,
   reloadShelf: PropTypes.func.isRequired,
+  shelvedBooks: PropTypes.array,
 };
 
 export default Book

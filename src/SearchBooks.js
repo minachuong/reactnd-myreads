@@ -18,10 +18,8 @@ class SearchBooks extends Component {
     } else {
       BooksAPI.search(query, 20).then((response) => { 
         if (Array.isArray(response)) {
-          let shelvedBookIds = this.props.books.map((shelvedBook) => shelvedBook.id);
-          let unshelvedBooks = response.filter((book) => shelvedBookIds.includes(book.id) === false);
           this.setState({ 
-            availableBooks: unshelvedBooks,
+            availableBooks: response,
             query: query,
           });
         };
@@ -48,7 +46,7 @@ class SearchBooks extends Component {
         <div className="search-books-results">
           <ol className="books-grid">
             {availableBooks.map((book) => (
-               <Book key={book.id} book={book} reloadShelf={() => this.props.reloadShelves()} />
+               <Book key={book.id} book={book} shelvedBooks={this.props.books} reloadShelf={() => this.props.reloadShelves()} />
             ))}
           </ol>
         </div>
