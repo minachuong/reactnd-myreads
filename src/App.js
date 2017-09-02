@@ -43,7 +43,7 @@ class BooksApp extends React.Component {
           <SearchBooks books={books} reloadShelves={() => this.getBooks()} />
         )} />
         <Route exact path="/" render={() => (
-           <div className="list-books">
+          <div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
             </div>

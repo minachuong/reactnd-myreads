@@ -13,7 +13,7 @@ class Book extends Component {
     });
   };
  
-  assignShelfValue = (book) => {
+  assignShelfValue (book) {
     let shelvedBooksIds = this.state.shelvedBooks.map((shelvedBook) => shelvedBook.id);
     let shelfValue = shelvedBooksIds.includes(book.id) ? this.props.shelvedBooks.filter((shelvedBook) => shelvedBook.id === book.id)[0].shelf : "none";
     return shelfValue;
