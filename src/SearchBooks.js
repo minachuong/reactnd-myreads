@@ -12,18 +12,26 @@ class SearchBooks extends Component {
     query: '',
   };
   
-  search = (query) => {
+  search(query) {
+    this.setState((prevState) => {
+      return {
+        ...prevState,
+        query,
+      };
+    });
+    this.updateQuery(query);
+  };
+    
+  updateQuery(query) {
     if (SearchTerms.includes(Humanize.capitalizeAll(query)) === false) {
-      this.setState({ query: query });
-    } else {
-      BooksAPI.search(query, 20).then((response) => { 
+      BooksAPI.search(query, 20).then((response) => {
         if (Array.isArray(response)) {
-          this.setState({ 
+          this.setState({
             availableBooks: response,
-            query: query,
+            query: query,  
           });
         };
-      }); 
+      });
     };
   };
 
