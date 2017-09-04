@@ -30,6 +30,12 @@ class BooksApp extends React.Component {
     });
   }; 
   
+  updateBook(book, newShelf) {
+    BooksAPI.update(book, newShelf).then(() => {
+      this.getBooks();
+    }); 
+  }; 
+
   componentDidMount() {
     this.getBooks();
   };
@@ -55,6 +61,7 @@ class BooksApp extends React.Component {
                   shelf={category['shelf']} 
                   key={category['shelf']} 
                   reloadShelves={() => this.getBooks()}
+                  updateBook={(book, shelf) => this.updateBook(book, shelf)}
                 />
               ))}
             </div>
