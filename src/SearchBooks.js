@@ -35,8 +35,14 @@ class SearchBooks extends Component {
     };
   };
 
+  assignShelfValue(book) {
+    let shelvedBooksIds = this.props.books.map((shelvedBook) => shelvedBook.id);
+    let shelfValue = shelvedBooksIds.includes(book.id) ? this.props.books.filter((shelvedBook) => shelvedBook.id === book.id)[0].shelf : "none";
+    return shelfValue;
+  };
+
   render() {
-    const { query, availableBooks } = this.state;
+    const { query, availableBooks, reloadShelves } = this.state;
 
     return (
       <div className="search-books">
@@ -54,7 +60,13 @@ class SearchBooks extends Component {
         <div className="search-books-results">
           <ol className="books-grid">
             {availableBooks.map((book) => (
-               <Book key={book.id} book={book} shelvedBooks={this.props.books} reloadShelf={() => this.props.reloadShelves()} />
+              <Book
+                key={book.id}
+                book={book}
+                shelf={this.assignShelfValue(book)}
+                reloadShelf={() => reloadShelves()}
+                updateBook={(book, shelf) => this.props.updateBook(book, shelf)}
+              />
             ))}
           </ol>
         </div>
@@ -65,7 +77,8 @@ class SearchBooks extends Component {
 
 SearchBooks.propTypes = {
   books: PropTypes.array.isRequired,
-  reloadShelves: PropTypes.func.isRequired, 
+  reloadShelves: PropTypes.func.isRequired,
+  updateBook: PropTypes.func.isRequired, 
 };
 
 export default SearchBooks
