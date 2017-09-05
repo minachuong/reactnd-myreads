@@ -46,7 +46,10 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
         <Route path="/search" render={() => (
-          <SearchBooks books={books} reloadShelves={() => this.getBooks()} updateBook={(book, shelf) => this.updateBook(book, shelf)} />
+          <SearchBooks
+            books={books}
+            updateBook={(book, shelf) => this.updateBook(book, shelf)}
+          />
         )} />
         <Route exact path="/" render={() => (
           <div className="list-books">
@@ -60,7 +63,6 @@ class BooksApp extends React.Component {
                   title={category['title']} 
                   shelf={category['shelf']} 
                   key={category['shelf']} 
-                  reloadShelves={() => this.getBooks()}
                   updateBook={(book, shelf) => this.updateBook(book, shelf)}
                 />
               ))}

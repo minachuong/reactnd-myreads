@@ -42,7 +42,7 @@ class SearchBooks extends Component {
   };
 
   render() {
-    const { query, availableBooks, reloadShelves } = this.state;
+    const { query, availableBooks } = this.state;
 
     return (
       <div className="search-books">
@@ -64,7 +64,6 @@ class SearchBooks extends Component {
                 key={book.id}
                 book={book}
                 shelf={this.assignShelfValue(book)}
-                reloadShelf={() => reloadShelves()}
                 updateBook={(book, shelf) => this.props.updateBook(book, shelf)}
               />
             ))}
@@ -77,7 +76,6 @@ class SearchBooks extends Component {
 
 SearchBooks.propTypes = {
   books: PropTypes.array.isRequired,
-  reloadShelves: PropTypes.func.isRequired,
   updateBook: PropTypes.func.isRequired, 
 };
 
